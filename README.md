@@ -125,13 +125,13 @@ ON EXÉCUTE LE TERMINAL ET POWERSHELL EN ADMIN SUR LES MACHINES RESPECTIVES
 => Même vérification pour OpenSSH que précédemment
 
 - On vérifie si on peut se connecter en SSH :  
-  `ssh client@ip` (*Si tout est ok, on quitte*)  
+  `ssh server@ip` (*Si tout est ok, on quitte*)  
   `exit`  
 
 - On déploie la clé SSH depuis Windows vers Ubuntu :  
   `get-content -path .\.ssh\id_ecdsa.pub` (*On copie la clé*)  
-  `ssh client@ip` (*On se connecte en SSH au client*)  
+  `ssh server@ip` (*On se connecte en SSH au serveur*)  
   `nano .ssh/authorized_keys` (*On colle la clé*)  
 
 - On se connecte en SSH et normalement pas de mot de passe demandé :  
-  `ssh client@ip`
+  `ssh server@ip`
