@@ -53,7 +53,7 @@ ON EXÉCUTE POWERSHELL EN ADMIN SUR LES DEUX MACHINES = toujours un mot de passe
 - On vérifie la fonctionnalité serveur-SSH sur le serveur :  
   => Système... => Ajouter une fonctionnalité = serveur OpenSSH  
 Ou en PowerShell, pour savoir si le serveur et le client sont présents :  
-``Get-WindowsCapability -Online -Name openssh*``  
+``Get-WindowsCapability -Online -Name *ssh*``  
 Nous aurons les noms exacts ( ligne "Name") de ce qu'il faut installer dans le cas où ils ne seraient pas présents.
 
 Pour installer serveur en PowerShell si pas présent :  
