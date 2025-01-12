@@ -50,7 +50,7 @@ ON EXÉCUTE POWERSHELL EN ADMIN SUR LES DEUX MACHINES = toujours un mot de passe
 
 - On active la fonctionnalité client-SSH sur les machines :  
   => Système => Fonctionnalités facultatives = vérifier la présence du client SSH
-- On vérifie la fonctionnalité serveur-SSH sur le client :  
+- On vérifie la fonctionnalité serveur-SSH sur le serveur :  
   => Système... => Ajouter une fonctionnalité = serveur OpenSSH  
 Ou en PowerShell, pour savoir si le serveur et le client sont présents :  
 ``Get-WindowsCapability -Online -Name openssh*``  
@@ -59,31 +59,31 @@ Nous aurons les noms exacts ( ligne "Name") de ce qu'il faut installer dans le c
 Pour installer serveur en PowerShell si pas présent :  
 ``Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0``  
 
-- On vérifie le service sur le client avec :  
+- On vérifie le service sur le serveur avec :  
   `get-service sshd` (*Si pas activé :*)  
   `get-service sshd | Set-Service -StartupType automatic` (*Puis on démarre :*)  
   `Restart-Service sshd`  
   `get-service sshd` (*Si tout est ok, le service est en "running"*)  
 
 - On met les machines sur le même réseau IP (VM en pont) :  
-  `ipconfig` (*On récupère l'IP du client*)  
+  `ipconfig` (*On récupère l'IP du serveur*)  
 
-- On teste la connexion SSH depuis le serveur :  
+- On teste la connexion SSH depuis le client :  
   `ssh client@ip powershell` (*Si tout est bon, on entre le mot de passe => on précise PowerShell*)  
   `exit`  
 
-- Sur le serveur, on crée la clé SSH :  
+- Sur le client, on crée la clé SSH :  
   `ssh-keygen -t ecdsa`  
   (*On va vérifier où est la clé et si tout est ok :*)  
   `Set-Location c:\Users\client\.ssh\`  
   `get ChildItem` (*On vérifie la clé*)  
 
-- On déploie la clé SSH publique depuis le serveur vers le client :  
+- On déploie la clé SSH publique depuis le client vers le serveur :  
   `get-content -path .\.ssh\id_ecdsa.pub` (*On copie la clé*)  
-  `ssh client@ip` (*On se connecte en SSH au client*)  
-  `add-content -path .ssh\authorized_keys -value "la clé"` (*On vérifie dans le fichier du client*)  
+  `ssh server@ip` (*On se connecte en SSH au serveur*)  
+  `add-content -path .ssh\authorized_keys -value "la clé"` (*On vérifie dans le fichier du serveur*)  
 
-- On va dans le répertoire Program Data sur le client :  
+- On va dans le répertoire Program Data sur le serveur :  
   `C:\ProgramData\ssh\sshd_config` (*élément masqué dans affichage classique*)  
   `On commente la ligne MATCH group administrator` (*On sauvegarde et on redémarre le service :*)  
   `Restart-Service sshd`  
