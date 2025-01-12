@@ -18,8 +18,8 @@ ON EXÉCUTE LE TERMINAL SUR LES DEUX MACHINES
   `ip a` (*Pour récupérer l'IP*)  
   `ping (adresse ip)` (*On vérifie si la communication est ok*)  
 
-- On se connecte depuis le serveur pour vérifier que tout fonctionne :  
-  `ssh client@ip` (*On confirme et on entre le mot de passe*)  
+- On se connecte depuis le client pour vérifier que tout fonctionne :  
+  `ssh serveur@ip` (*On confirme et on entre le mot de passe*)  
   `exit`  
 
 - On crée une clé SSH :  
@@ -28,16 +28,16 @@ ON EXÉCUTE LE TERMINAL SUR LES DEUX MACHINES
   `passphrase non obligatoire`  
   `ls -a` (*Pour vérifier le fichier .ssh => lieu de stockage de la clé SSH*)  
 
-- On déploie la clé SSH publique depuis le serveur vers le client :  
+- On déploie la clé SSH publique depuis le client vers le serveur :  
   `ssh-copy-id -i /home/user/.ssh/id_ecdsa.pub client@ip`  
   `On entre le mot de passe` (*Si tout est ok, on se connecte*)  
 
 - On vérifie que la clé correspond sur les deux machines :  
-  `cat /home/wcs/.ssh/id_ecdsa.pub` (*Sur le serveur*)  
-  `cat .ssh/authorized_keys` (*Sur le client*)  
+  `cat /home/wcs/.ssh/id_ecdsa.pub` (*Sur le client*)  
+  `cat .ssh/authorized_keys` (*Sur le serveur*)  
 
 - On se connecte sans mot de passe :  
-  `ssh client@ip` (*Si tout est ok, aucun mot de passe demandé*)  
+  `ssh serveur@ip` (*Si tout est ok, aucun mot de passe demandé*)  
 
 ---
 
@@ -47,6 +47,8 @@ ON EXÉCUTE POWERSHELL EN ADMIN SUR LES DEUX MACHINES = toujours un mot de passe
 
 - On vérifie les services du client :  
   `get-service ssh-agent`  
+-Si installé mais pas activé :
+Start-Service -Name ssh-agent  
 
 - On active la fonctionnalité client-SSH sur les machines :  
   => Système => Fonctionnalités facultatives = vérifier la présence du client SSH
